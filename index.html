@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do list</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <noscript>JS is not working</noscript>
+
+    <div id="main">
+        <form id="taskWriting">
+            <input type="text" name="usersInput" placeholder="Write a task...">
+            <button>Done</button>
+            <span id="error" class="hidden"></span>
+        </form>
+
+        <div id="clearingButtons">
+            <button id="clearButton" class="clrbtn">Clear <span id="allBtn">ALL</span> tasks</button>
+            <button id="clearComButton" class="clrbtn">Clear <span id="comBtn">COMPLETED</span> tasks</button>
+        </div>
+
+        <ul id="taskList"></ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
