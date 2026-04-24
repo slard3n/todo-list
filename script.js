@@ -1,27 +1,33 @@
+function save() {
+localStorage.setItem('tasks', document.getElementById('taskList').innerHTML);
+}
+
+function attachTaskEvents(li) {
+    li.addEventListener('click', function() {
+        this.classList.toggle('completed');
+        save();
+    });
+}
+    
 document.getElementById('taskWriting').addEventListener('submit', function(e) {
     e.preventDefault();
 
     let usersInput = this.usersInput.value;
 
+    const errorEl = document.getElementById('error');
+
     if(usersInput.trim() === '') {
-        document.getElementById('error').innerText = 'You didn\'t write anything!';
-        document.getElementById('error').classList.remove('hidden');
+        errorEl.innerText = 'You didn\'t write anything!';
+        errorEl.classList.remove('hidden');
         this.usersInput.value = '';
         return;
     }
 
-    if(usersInput.trim() != '') {
-        document.getElementById('error').classList.add('hidden');
-    }
+        errorEl.classList.add('hidden');
 
     this.usersInput.value = '';
 
-
-    // document.getElementById('error').innerText = '';
-    // this.usersInput.value = '';
     
-
-
     let li = document.createElement('li');
     li.className = 'task-item';
 
@@ -33,13 +39,16 @@ document.getElementById('taskWriting').addEventListener('submit', function(e) {
 
     document.getElementById('taskList').appendChild(li);
 
-    li.addEventListener('click', function() {
-        this.classList.toggle('completed');
-    });
+    attachTaskEvents(li);
+
+    save();
+    
 })
 
 document.getElementById('clearButton').addEventListener('click', function() {
     document.getElementById('taskList').innerHTML = '';
+
+    save();
 })
 
 document.getElementById('clearComButton').addEventListener('click', function() {
@@ -47,5 +56,15 @@ document.getElementById('clearComButton').addEventListener('click', function() {
 
     completedTasks.forEach(function(task) {
         task.remove();
+
+    save();
     });
+});
+
+window.addEventListener('load', function() {
+    const taskList = document.getElementById('taskList');
+
+    taskList.innerHTML = localStorage.getItem('tasks') || '';
+
+    document.querySelectorAll('.task-item').forEach(attachTaskEvents);
 });
